@@ -23,18 +23,25 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  res.json(
-    {
-      id: id,
-      name: "prod1",
-      price: 1250
-    }
-  )
+  if(id === '5') {
+    res.status(404).json({
+      message: 'Not Found'
+    })
+  } else {
+    res.status(200).json(
+      {
+        id: id,
+        name: "prod1",
+        price: 1250
+      }
+    )
+  }
+
 })
 
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'Created',
     data: body
   })
