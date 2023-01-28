@@ -1,13 +1,13 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import cors from 'cors';
 
 import routerApi from './routes/index.js';
 import {logErrors, errorHandler, boomErrorHandler} from './middlewares/error.handler.js';
 
 const app = express();
 const port = 3000;
-
 
 const options = {
   swaggerDefinition: {
@@ -21,8 +21,20 @@ const options = {
 };
 const specs = swaggerJsdoc(options);
 
+
 app.use(express.json());
-routerApi(app);
+
+const whiteList = ['http://localhost:8080', 'https://myurl.com'];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if(whiteList.includes(origin)){
+      callback(null, true);
+    }else {
+      callback(new Error("Not allowed"));
+    }
+  }
+}
+app.use(cors(corsOptions));
 
 app.use(logErrors);
 app.use(boomErrorHandler);
@@ -31,6 +43,8 @@ app.use(errorHandler);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
+
+routerApi(app);
 app.listen(port, () => {
   console.log("Server corriendo en puerto: ", port);
 });
