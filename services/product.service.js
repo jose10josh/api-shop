@@ -1,4 +1,5 @@
 import faker from 'faker';
+import boom from '@hapi/boom';
 
 
 class ProductService {
@@ -15,12 +16,13 @@ class ProductService {
         id: faker.datatype.uuid(),
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl()
+        image: faker.image.imageUrl(),
+        isBlock : faker.datatype.boolean()
       })
     }
   }
 
-  create(data){
+  async create(data){
     const newProduct = {
       id: faker.datatype.uuid(),
       ...data
@@ -30,18 +32,32 @@ class ProductService {
     return newProduct;
   }
 
-  find() {
-    return this.products;
+  async find() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.products);
+        reject("Error")
+      }, 3500)
+    })
+    // return this.products;
   }
 
-  findOne(id) {
-    return this.products.find(item => item.id === id);
+  async findOne(id) {
+    const product = this.products.find(item => item.id === id);
+    if(!product) {
+      throw boom.notFound('Product not found - id: ' + id)
+    }
+    if(product.isBlock){
+      throw boom.conflict('Produc is blocked - id: ' + id);
+    }
+
+    return product;
   }
 
-  update(id, updatedProducts) {
+  async update(id, updatedProducts) {
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error("Product not found");
+      throw boom.notFound('Product not found - id:' + id);
     }
 
     const product = this.products[index];
@@ -52,10 +68,10 @@ class ProductService {
     return this.products[index];
   }
 
-  delete(id) {
+  async delete(id) {
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error("Product not found");
+      throw boom.notFound('Product not found - id:' + id);
     }
 
     this.products.splice(index, 1);
