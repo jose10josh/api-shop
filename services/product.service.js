@@ -2,6 +2,7 @@ import faker from 'faker';
 import boom from '@hapi/boom';
 
 import pool from '../libs/postgres.js';
+import sequelize from '../libs/sequelize.js';
 
 class ProductService {
 
@@ -37,15 +38,8 @@ class ProductService {
 
   async find() {
     const query = `SELECT * FROM products`;
-    const products = await this.pool.query(query)
-    return products.rows;
-
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve(this.products);
-    //     reject("Error")
-    //   }, 3500)
-    // })
+    const [data] = await sequelize.query(query)
+    return data
   }
 
   async findOne(id) {

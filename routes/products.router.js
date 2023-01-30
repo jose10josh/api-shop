@@ -31,10 +31,9 @@ const service = new ProductService();
  *                "isBlock": true},
  *               ]
  */
-
 router.get('/', async (req, res) => {
-  const products = await service.find();
-  res.json(products);
+  const resp = await service.find();
+  res.json(resp);
 })
 
 /**
