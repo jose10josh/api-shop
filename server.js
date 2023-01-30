@@ -26,13 +26,15 @@ app.use(express.json());
 
 const whiteList = ['http://localhost:8080', 'https://myurl.com'];
 const corsOptions = {
-  origin: (origin, callback) => {
-    if(whiteList.includes(origin)){
-      callback(null, true);
-    }else {
-      callback(new Error("Not allowed"));
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (whiteList.indexOf(origin) === -1) {
+      var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
     }
-  }
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
 
