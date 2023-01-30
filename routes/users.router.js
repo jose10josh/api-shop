@@ -1,5 +1,9 @@
 import express from 'express';
+
 import UserService from '../services/user.service.js';
+import validatorHandler from '../middlewares/validator.handler.js';
+import { createUserSchema, updateUserSchema, getUserSchema
+  } from '../schemas/user.schema.js';
 
 const router = express.Router();
 const service = new UserService();
@@ -32,5 +36,157 @@ router.get('/', async (req, res) => {
   const resp = await service.find();
   res.json(resp);
 })
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *  get:
+ *    tags:
+ *      - Users
+ *    description: Return a single user
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user to retrieve
+ *    responses:
+ *      '200':
+ *        description: Return a single user object
+ *        content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               example: {
+ *                  "id": 3,
+ *                  "email": "test@correo.com",
+ *                  "password": "123123123",
+ *                  "createdAt": "2022-12-12T10:11:22.000Z"
+ *                }
+ */
+router.get('/:id',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const resp = await service.findOne(id);
+      res.status(201).json(resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+
+/**
+ * @swagger
+ * /api/v1/users:
+ *  post:
+ *    tags:
+ *      - Users
+ *    description: Create a new user
+ *    requestBody:
+ *      content:
+ *        "application/json":
+ *          schema:
+ *            type: object
+ *            example: {
+ *                "email": "user@email.com",
+ *                "password": "user_passwprd"
+ *            }
+ *    responses:
+ *      '201':
+ *        description: Return the created user object
+ *        content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               example: {
+ *                "id": 1,
+ *                "email": "user@email.com",
+ *                "password": "user_passwprd"
+ *               }
+ */
+router.post('/',
+  validatorHandler(createUserSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const resp = await service.create(body);
+      res.status(201).json(resp)
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *  patch:
+ *    tags:
+ *      - Users
+ *    description: Update an existing user
+ *    requestBody:
+ *      content:
+ *        "application/json":
+ *          schema:
+ *            type: object
+ *            example: {
+ *                "email": "user@email.com",
+ *                "password": "user_passwprd"
+ *            }
+ *    responses:
+ *      '200':
+ *        description: Return the updated user object
+ *        content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               example: {
+ *                "id": "ASD654A4SSA68D4A4S86D4A6SD",
+ *                "email": "user@email.com",
+ *                "password": "user_passwprd"
+ *               }
+ */
+router.patch('/:id',
+  validatorHandler(getUserSchema, 'params'),
+  validatorHandler(updateUserSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const resp = await service.update(id, body);
+      res.status(200).json(resp)
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *  delete:
+ *    tags:
+ *      - Users
+ *    description: Delete an existing user
+ *    responses:
+ *      '200':
+ *        description: Return status 200 if user deleted correctly
+ */
+router.delete('/:id',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const resp = await service.delete(id);
+      res.status(200).json({message: resp})
+    } catch (error) {
+      next(error);
+    }
+  }
+)
 
 export default router;

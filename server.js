@@ -24,7 +24,7 @@ const specs = swaggerJsdoc(options);
 
 app.use(express.json());
 
-const whiteList = ['http://localhost:8080', 'https://myurl.com'];
+const whiteList = ['http://localhost:8080', 'https://myurl.com', 'http://localhost:3000'];
 const corsOptions = {
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);
@@ -38,6 +38,8 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+routerApi(app);
+
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
@@ -46,7 +48,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 
-routerApi(app);
+
 app.listen(port, () => {
   console.log("Server corriendo en puerto: ", port);
 });

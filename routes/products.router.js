@@ -95,8 +95,8 @@ router.get('/:id',
  *                "isBlock": true
  *            }
  *    responses:
- *      '200':
- *        description: An array of products
+ *      '201':
+ *        description: The created product object
  *        content:
  *           application/json:
  *             schema:
