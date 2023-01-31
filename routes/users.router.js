@@ -78,7 +78,6 @@ router.get('/:id',
   }
 )
 
-
 /**
  * @swagger
  * /api/v1/users:
@@ -128,6 +127,13 @@ router.post('/',
  *    tags:
  *      - Users
  *    description: Update an existing user
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user to update
  *    requestBody:
  *      content:
  *        "application/json":
@@ -172,6 +178,13 @@ router.patch('/:id',
  *    tags:
  *      - Users
  *    description: Delete an existing user
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user to deletes
  *    responses:
  *      '200':
  *        description: Return status 200 if user deleted correctly
@@ -188,5 +201,6 @@ router.delete('/:id',
     }
   }
 )
+
 
 export default router;
