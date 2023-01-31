@@ -1,8 +1,8 @@
-import { UserSchema, User} from './user.model.js';
+const { UserSchema, User} = require('./user.model.js');
 
 function setUpModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
 }
 
 
-export default setUpModels;
+module.exports = setUpModels;

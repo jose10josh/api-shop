@@ -1,9 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import UserService from '../services/user.service.js';
-import validatorHandler from '../middlewares/validator.handler.js';
-import { createUserSchema, updateUserSchema, getUserSchema
-  } from '../schemas/user.schema.js';
+const UserService = require('../services/user.service.js');
+const validatorHandler = require('../middlewares/validator.handler.js');
+const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema.js');
 
 const router = express.Router();
 const service = new UserService();
@@ -92,7 +91,7 @@ router.get('/:id',
  *            type: object
  *            example: {
  *                "email": "user@email.com",
- *                "password": "user_passwprd"
+ *                "password": "user_password"
  *            }
  *    responses:
  *      '201':
@@ -100,11 +99,22 @@ router.get('/:id',
  *        content:
  *           application/json:
  *             schema:
- *               type: array
+ *               type: object
  *               example: {
  *                "id": 1,
  *                "email": "user@email.com",
- *                "password": "user_passwprd"
+ *                "password": "user_password"
+ *               }
+ *      '400':
+ *        description: Return a object with the error message
+ *        content:
+ *          application/json:
+ *             schema:
+ *               type: object
+ *               example: {
+ *                "statusCode": 400,
+ *                "error": "Bad Request",
+ *                "message": "\"role\" is required"
  *               }
  */
 router.post('/',
@@ -141,7 +151,7 @@ router.post('/',
  *            type: object
  *            example: {
  *                "email": "user@email.com",
- *                "password": "user_passwprd"
+ *                "password": "user_password"
  *            }
  *    responses:
  *      '200':
@@ -153,7 +163,7 @@ router.post('/',
  *               example: {
  *                "id": "ASD654A4SSA68D4A4S86D4A6SD",
  *                "email": "user@email.com",
- *                "password": "user_passwprd"
+ *                "password": "user_password"
  *               }
  */
 router.patch('/:id',
@@ -203,4 +213,4 @@ router.delete('/:id',
 )
 
 
-export default router;
+module.exports = router;

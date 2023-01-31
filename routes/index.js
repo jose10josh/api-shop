@@ -1,6 +1,6 @@
-import express from 'express';
-import productsRouter from './products.router.js';
-import usersRouter from './users.router.js';
+const express = require('express');
+const productsRouter = require('./products.router.js');
+const usersRouter = require('./users.router.js');
 
 
 
@@ -13,4 +13,4 @@ function routerApi(app) {
 }
 
 
-export default routerApi;
+module.exports = routerApi;

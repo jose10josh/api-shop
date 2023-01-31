@@ -1,8 +1,8 @@
-import faker from 'faker';
-import boom from '@hapi/boom';
+const faker = require('faker');
+const boom = require('@hapi/boom');
 
-import pool from '../libs/postgres.js';
-import sequelize from '../libs/sequelize.js';
+const pool = require('../libs/postgres.js');
+const sequelize = require('../libs/sequelize.js');
 
 class ProductService {
 
@@ -81,4 +81,4 @@ class ProductService {
 }
 
 
-export default ProductService;
+module.exports = ProductService;

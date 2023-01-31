@@ -1,7 +1,7 @@
-import boom from '@hapi/boom';
+const boom = require('@hapi/boom');
 
-import pool from '../libs/postgres.js';
-import sequelize from '../libs/sequelize.js';
+const pool = require('../libs/postgres.js');
+const sequelize = require('../libs/sequelize.js');
 const models = sequelize.models;
 
 
@@ -28,24 +28,21 @@ class UserService {
 
   async create(data){
     const newUser = await models.User.create(data);
-    console.log("New User", newUser);
     return newUser;
   }
 
   async update(id, data){
     const user = await this.findOne(id);
     const resp = await user.update(data);
-    console.log("Updated User", user);
     return resp;
   }
 
   async delete(id){
     const user = await this.findOne(id);
     await user.destroy();
-    console.log("Updated User", user);
     return "User deleted correctly";
   }
 }
 
 
-export default UserService;
+module.exports = UserService;

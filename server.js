@@ -1,10 +1,10 @@
-import express from 'express';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import cors from 'cors';
+const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const cors = require('cors');
 
-import routerApi from './routes/index.js';
-import {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} from './middlewares/error.handler.js';
+const routerApi = require('./routes/index.js');
+const {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/error.handler.js');
 
 const app = express();
 const port = 3000;

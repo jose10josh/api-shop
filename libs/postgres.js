@@ -1,11 +1,13 @@
-import pkg from 'pg';
-const {Pool} = pkg;
+const { Pool } = require('pg');
 
-import config from '../config/config.js';
+const { config } = require('./../config/config');
+
+
+
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
 const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`
 
 const pool = new Pool({ connectionString: URI });
 
-export default pool;
+module.exports = pool;

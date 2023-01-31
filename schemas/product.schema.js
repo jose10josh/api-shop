@@ -1,4 +1,4 @@
-import Joi from 'joi';
+const Joi = require('joi');
 
 const id = Joi.string().uuid();
 const name = Joi.string().min(3).max(30);
@@ -21,4 +21,4 @@ const getProductSchema = Joi.object({
   id: id.required()
 });
 
-export { createProductSchema, updateProductSchema, getProductSchema };
+module.exports = { createProductSchema, updateProductSchema, getProductSchema };
