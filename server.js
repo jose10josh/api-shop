@@ -4,7 +4,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import cors from 'cors';
 
 import routerApi from './routes/index.js';
-import {logErrors, errorHandler, boomErrorHandler} from './middlewares/error.handler.js';
+import {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} from './middlewares/error.handler.js';
 
 const app = express();
 const port = 3000;
@@ -41,6 +41,7 @@ app.use(cors(corsOptions));
 routerApi(app);
 
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
