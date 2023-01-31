@@ -35,7 +35,7 @@ const UserSchema = {
 
 class User extends Model {
 
-  static associations() {
+  static associate() {
     //
   }
 

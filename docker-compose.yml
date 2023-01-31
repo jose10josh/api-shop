@@ -28,6 +28,8 @@ services:
       - MYSQL_PORT=3306
     ports:
       - 3306:3306
+    volumes:
+      - './mysql_db_data:/var/lib/mysql'
 
 
   phpmyadmin:
