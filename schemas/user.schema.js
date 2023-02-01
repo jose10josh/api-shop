@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const id = Joi.number();
-const email = Joi.string().min(3).max(30);
+const email = Joi.string().email().min(3).max(30);
 const password = Joi.string().min(8);
 const role = Joi.string();
 
