@@ -1,8 +1,7 @@
 const boom = require('@hapi/boom');
 
 const pool = require('../libs/postgres.js');
-const sequelize = require('../libs/sequelize.js');
-const models = sequelize.models;
+const { models }= require('./../libs/sequelize');
 
 
 class UserService {

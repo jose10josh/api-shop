@@ -28,7 +28,7 @@ const service = new ProductService();
  *                "name": "Product Name",
  *                "price": 1850,
  *                "image": "http://placeimg.com/640/480",
- *                "isBlock": true},
+ *                },
  *               ]
  */
 router.get('/', async (req, res) => {
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
  *                "name": "Product Name",
  *                "price": 1850,
  *                "image": "http://placeimg.com/640/480",
- *                "isBlock": true}
+ *                }
  */
 router.get('/:id',
   validatorHandler(getProductSchema, 'params'),
@@ -92,7 +92,6 @@ router.get('/:id',
  *                "name": "Product Name",
  *                "price": 1850,
  *                "image": "http://placeimg.com/640/480",
- *                "isBlock": true
  *            }
  *    responses:
  *      '201':
@@ -106,7 +105,6 @@ router.get('/:id',
  *                "name": "Product Name",
  *                "price": 1850,
  *                "image": "http://placeimg.com/640/480",
- *                "isBlock": true
  *               }
  */
 router.post('/',
@@ -127,13 +125,9 @@ router.patch('/:id',
   try {
     const { id } = req.params;
     const body = req.body;
-    const updateResponse = await service.update(id, body);
+    const resp = await service.update(id, body);
 
-    res.json({
-      id,
-      message: 'Product Updated',
-      data: updateResponse
-    })
+    res.json(resp)
   } catch (error) {
     next(error);
   }
