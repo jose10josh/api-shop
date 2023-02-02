@@ -1,4 +1,5 @@
 // const faker = require('faker');
+const { Op } = require("sequelize");
 const boom = require('@hapi/boom');
 
 const pool = require('../libs/postgres.js');
@@ -21,19 +22,22 @@ class ProductService {
   }
 
   async find(query) {
-    let { limit, offset } = query;
+    let { limit, offset, minprice, maxprice } = query;
+
     if(!limit) {
       limit = 10;
     }
     if(!offset){
       offset = 0;
-
     }
+
+    const whereClause = this.getPriceFilter(minprice, maxprice);
 
     const options = {
       include: ['category'],
       limit,
-      offset
+      offset,
+      where: whereClause
     };
 
     const resp = await models.Product.findAll(options);
@@ -58,6 +62,31 @@ class ProductService {
     const resp = await this.findOne(id);
     await resp.destroy();
     return "Product deleted correctly";
+  }
+
+
+  getPriceFilter(minPrice, maxPrice) {
+    let whereClause = {};
+    if (minPrice !== null && maxPrice !== null) {
+      whereClause = {
+        price: {
+          [Op.between]: [minPrice, maxPrice]
+        }
+      };
+    } else if (minPrice !== null) {
+      whereClause = {
+        price: {
+          [Op.gte]: minPrice
+        }
+      };
+    } else if (maxPrice !== null) {
+      whereClause = {
+        price: {
+          [Op.lte]: maxPrice
+        }
+      };
+    }
+    return whereClause;
   }
 
 }
