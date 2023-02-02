@@ -15,4 +15,17 @@ const sequelize = new Sequelize(URI, {
 
 setUpModels(sequelize);
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    if (err.name === 'SequelizeConnectionRefusedError') {
+      console.error('Failed to connect to the database: ',);
+    } else {
+      throw err;
+    }
+  });
+
 module.exports = sequelize;

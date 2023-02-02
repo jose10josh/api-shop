@@ -4,6 +4,7 @@ const { CategorySchema, Category } = require('./category.model.js');
 const { ProductSchema, Product } = require('./product.model.js');
 const { OrderSchema, Order } = require('./order.model.js');
 const { OrdersProducsSchema, OrderProduct } = require('./order-products.model');
+const { RoleSchema, Role } = require('./role.model');
 
 function setUpModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
@@ -12,6 +13,7 @@ function setUpModels(sequelize) {
   Product.init(ProductSchema, Product.config(sequelize));
   Order.init(OrderSchema, Order.config(sequelize));
   OrderProduct.init(OrdersProducsSchema, OrderProduct.config(sequelize));
+  Role.init(RoleSchema, Role.config(sequelize));
 
 
   User.associate(sequelize.models);
@@ -19,7 +21,7 @@ function setUpModels(sequelize) {
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
   Order.associate(sequelize.models);
-  // OrderProduct.associate(sequelize.models);
+  Role.associate(sequelize.models);
 }
 
 

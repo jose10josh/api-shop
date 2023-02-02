@@ -1,6 +1,6 @@
 const {Model, DataTypes, Sequelize} = require('sequelize');
 
-
+const {ROLE_TABLE} = require('./role.model');
 
 const USER_TABLE = 'users';
 
@@ -20,15 +20,19 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  role: {
+  role_id: {
     allowNull: false,
-    type: DataTypes.STRING,
-    defaultValue: 'customer'
+    type: DataTypes.INTEGER,
+    references: {
+      model: ROLE_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'created_at',
     defaultValue: Sequelize.NOW
   }
 }
@@ -40,6 +44,7 @@ class User extends Model {
       as: 'customer',
       foreignKey: 'userId'
     })
+    this.belongsTo(models.Role, {as: 'role'});
   }
 
   static config(sequelize) {

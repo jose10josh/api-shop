@@ -31,9 +31,13 @@ const service = new UserService();
  *                }
  *               ]
  */
-router.get('/', async (req, res) => {
-  const resp = await service.find();
-  res.json(resp);
+router.get('/', async (req, res, next) => {
+  try {
+    const resp = await service.find();
+    res.json(resp);
+  } catch (error) {
+    next(error);
+  }
 })
 
 /**
@@ -91,7 +95,8 @@ router.get('/:id',
  *            type: object
  *            example: {
  *                "email": "user@email.com",
- *                "password": "user_password"
+ *                "password": "user_password",
+ *                "role_id": 1
  *            }
  *    responses:
  *      '201':

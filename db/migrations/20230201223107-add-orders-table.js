@@ -23,7 +23,7 @@ module.exports = {
       customerId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        filed: 'customer_id',
+        field: 'customer_id',
         references: {
           model: CUSTOMER_TABLE,
           key: 'userId'
@@ -53,7 +53,7 @@ module.exports = {
       orderId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        filed: 'order_id',
+        field: 'order_id',
         references: {
           model: ORDER_TABLE,
           key: 'id'
@@ -64,7 +64,7 @@ module.exports = {
       productId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        filed: 'product_id',
+        field: 'product_id',
         references: {
           model: PRODUCT_TABLE,
           key: 'id'
@@ -76,7 +76,7 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.drop(ORDER_TABLE);
-    await queryInterface.drop(ORDER_PRODUCT_TABLE);
+    await queryInterface.dropTable(ORDER_TABLE);
+    await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
   }
 };

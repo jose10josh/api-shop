@@ -10,7 +10,7 @@ const customerSchema = {
     allowNull: false,
     primaryKey:true,
     type: DataTypes.INTEGER,
-    filed: 'user_id',
+    field: 'user_id',
     references: {
       model: USER_TABLE,
       key: 'id'

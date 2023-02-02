@@ -17,7 +17,7 @@ const OrderSchema = {
   customerId: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    filed: 'customer_id',
+    field: 'customer_id',
     references: {
       model: CUSTOMER_TABLE,
       key: 'userId'

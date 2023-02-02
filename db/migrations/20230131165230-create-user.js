@@ -25,13 +25,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        field: 'created_at',
         defaultValue: Sequelize.NOW
       }
     });
   },
 
   async down (queryInterface) {
-    await queryInterface.drop(USER_TABLE);
+    await queryInterface.dropTable(USER_TABLE);
   }
 };

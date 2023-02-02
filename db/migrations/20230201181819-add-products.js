@@ -26,7 +26,6 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        field: 'created_at',
         defaultValue: Sequelize.NOW
       }
     });
@@ -58,7 +57,6 @@ module.exports = {
       categoryId: {
         allowNull: true,
         type: DataTypes.INTEGER,
-        filed: 'category_id',
         references: {
           model: CATEGORY_TABLE,
           key: 'id'
@@ -69,14 +67,13 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        field: 'created_at',
         defaultValue: Sequelize.NOW
       },
     });
   },
 
   async down (queryInterface) {
-    await queryInterface.drop(CATEGORY_TABLE);
-    await queryInterface.drop(PRODUCT_TABLE);
+    await queryInterface.drdropTableop(CATEGORY_TABLE);
+    await queryInterface.dropTable(PRODUCT_TABLE);
   }
 };

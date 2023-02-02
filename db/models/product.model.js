@@ -41,7 +41,7 @@ const ProductSchema = {
   categoryId: {
     allowNull: true,
     type: DataTypes.INTEGER,
-    filed: 'category_id',
+    field: 'category_id',
     references: {
       model: CATEGORY_TABLE,
       key: 'id'
