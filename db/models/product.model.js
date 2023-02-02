@@ -29,6 +29,15 @@ const ProductSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  qty: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  hidden: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   categoryId: {
     allowNull: true,
     type: DataTypes.INTEGER,

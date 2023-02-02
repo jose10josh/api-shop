@@ -13,7 +13,7 @@ const CategorySchema = {
   name: {
     allowNull: false,
     unique:true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
   },
   image: {
     allowNull: false,

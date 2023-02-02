@@ -10,6 +10,10 @@ const OrderSchema = {
     type: DataTypes.INTEGER,
     autoIncrement: true
   },
+  details: {
+    allowNull: true,
+    type: DataTypes.TEXT
+  },
   customerId: {
     allowNull: false,
     type: DataTypes.INTEGER,
