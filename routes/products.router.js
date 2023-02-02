@@ -3,7 +3,8 @@ const ProductService = require('../services/product.service.js');
 const validatorHandler = require('../middlewares/validator.handler.js');
 const { createProductSchema,
   updateProductSchema,
-  getProductSchema
+  getProductSchema,
+  queryProductSchema
 } = require('../schemas/product.schema.js');
 
 const router = express.Router();
@@ -30,11 +31,14 @@ const service = new ProductService();
  *                "image": "http://placeimg.com/640/480",
  *                },
  *               ]
- */
-router.get('/', async (req, res) => {
-  const resp = await service.find();
-  res.json(resp);
-})
+*/
+router.get('/',
+  validatorHandler(queryProductSchema, 'query'),
+  async (req, res) => {
+    const resp = await service.find(req.query);
+    res.json(resp);
+  }
+)
 
 /**
  * @swagger
