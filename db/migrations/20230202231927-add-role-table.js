@@ -16,7 +16,7 @@ module.exports = {
         autoIncrement: true
       },
       name: {
-        allowNull: true,
+        allowNull: false,
         type: DataTypes.STRING(30)
       }
     });

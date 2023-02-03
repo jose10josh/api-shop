@@ -27,7 +27,6 @@ const service = new UserService();
  *                  "id": 3,
  *                  "email": "test@correo.com",
  *                  "password": "123123123",
- *                  "createdAt": "2022-12-12T10:11:22.000Z"
  *                }
  *               ]
  */
@@ -65,7 +64,6 @@ router.get('/', async (req, res, next) => {
  *                  "id": 3,
  *                  "email": "test@correo.com",
  *                  "password": "123123123",
- *                  "createdAt": "2022-12-12T10:11:22.000Z"
  *                }
  */
 router.get('/:id',

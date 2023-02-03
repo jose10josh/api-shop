@@ -19,9 +19,9 @@ const RoleSchema = {
 class Role extends Model {
 
   static associate(models) {
-    this.hasMany(models.Product, {
-      as: 'product',
-      foreignKey: 'categoryId'
+    this.hasMany(models.User, {
+      as: 'user',
+      foreignKey: 'roleId'
     });
   }
 

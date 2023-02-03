@@ -25,12 +25,12 @@ function ormErrorHandler (err, req, res, next) {
     })
   };
 
-  if (err.name === 'SequelizeConnectionRefusedError') {
-    console.error('Failed to connect to the database: ', err);
+  if (err.name === 'SequelizeConnectionRefusedError' || err.name === 'SequelizeDatabaseError') {
+    console.error('Database Error: ', err);
     res.status(500).json({
       statusCode: 500,
       message: err.name,
-      errors: 'Failed to connect to the database'
+      errors: err.message
     })
   };
 

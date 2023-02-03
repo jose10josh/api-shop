@@ -10,7 +10,6 @@ const customerSchema = {
     allowNull: false,
     primaryKey:true,
     type: DataTypes.INTEGER,
-    field: 'user_id',
     references: {
       model: USER_TABLE,
       key: 'id'
@@ -25,7 +24,6 @@ const customerSchema = {
   lastName: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'last_name'
   },
   phone: {
     allowNull: false,

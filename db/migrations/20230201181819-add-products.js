@@ -26,6 +26,7 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
         defaultValue: Sequelize.NOW
       }
     });
@@ -67,6 +68,7 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
         defaultValue: Sequelize.NOW
       },
     });

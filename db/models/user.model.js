@@ -20,7 +20,7 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  role_id: {
+  roleId: {
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
@@ -33,6 +33,7 @@ const UserSchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
+    field: 'created_at',
     defaultValue: Sequelize.NOW
   }
 }

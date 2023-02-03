@@ -23,7 +23,6 @@ module.exports = {
       customerId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        field: 'customer_id',
         references: {
           model: CUSTOMER_TABLE,
           key: 'userId'
@@ -53,7 +52,6 @@ module.exports = {
       orderId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        field: 'order_id',
         references: {
           model: ORDER_TABLE,
           key: 'id'
@@ -64,7 +62,6 @@ module.exports = {
       productId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        field: 'product_id',
         references: {
           model: PRODUCT_TABLE,
           key: 'id'
