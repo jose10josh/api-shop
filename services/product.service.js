@@ -2,19 +2,11 @@
 const { Op } = require("sequelize");
 const boom = require('@hapi/boom');
 
-const pool = require('../libs/postgres.js');
 const { models }= require('./../libs/sequelize');
 
 class ProductService {
 
-  constructor() {
-    this.generate();
-    this.pool = pool;
-    this.pool.on("error", (err) => console.log(err));
-  }
-
-  generate() {
-  }
+  constructor() {}
 
   async create(data){
     const resp = await models.Product.create(data);
@@ -31,12 +23,21 @@ class ProductService {
       offset = 0;
     }
 
-    const whereClause = this.getPriceFilter(minprice, maxprice);
+    let whereClause = {hidden: 0};
+    const priceFilter = this.getPriceFilter(minprice, maxprice);
+    whereClause = {...whereClause, ...priceFilter}
 
     const options = {
-      include: ['category'],
-      limit,
-      offset,
+      attributes: ['id', 'name', 'price', 'description', 'image', 'qty'],
+      include: [
+        {
+          model: models.Category,
+          as:'category',
+          attributes:['id', 'name', 'image']
+        }
+      ],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
       where: whereClause
     };
 
@@ -45,7 +46,25 @@ class ProductService {
   }
 
   async findOne(id) {
-    const resp = await models.Product.findByPk(id);
+    const whereClause = {
+      id: id,
+      hidden: 0
+    };
+
+
+    const options = {
+      attributes: ['id', 'name', 'price', 'description', 'image', 'qty'],
+      include: [
+        {
+          model: models.Category,
+          as:'category',
+          attributes:['id', 'name', 'image']
+        }
+      ],
+      where: whereClause
+    }
+
+    const resp = await models.Product.findOne(options);
     if(!resp) {
       throw boom.notFound('Product not found - id: ' + id)
     }
@@ -54,32 +73,32 @@ class ProductService {
 
   async update(id, data) {
     const prod = await this.findOne(id);
-    const resp = await prod.update(data);
-    return resp;
+    await prod.update(data);
+    return {message: "Product updated correctly"};
   }
 
   async delete(id) {
     const resp = await this.findOne(id);
     await resp.destroy();
-    return "Product deleted correctly";
+    return {message: "Product deleted correctly"};
   }
 
 
   getPriceFilter(minPrice, maxPrice) {
     let whereClause = {};
-    if (minPrice !== null && maxPrice !== null) {
+    if (minPrice !== undefined && maxPrice !== undefined) {
       whereClause = {
         price: {
           [Op.between]: [minPrice, maxPrice]
         }
       };
-    } else if (minPrice !== null) {
+    } else if (minPrice !== undefined) {
       whereClause = {
         price: {
           [Op.gte]: minPrice
         }
       };
-    } else if (maxPrice !== null) {
+    } else if (maxPrice !== undefined) {
       whereClause = {
         price: {
           [Op.lte]: maxPrice

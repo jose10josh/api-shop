@@ -162,15 +162,6 @@ router.post('/',
  *    responses:
  *      '200':
  *        description: Return a success message
- *        content:
- *           application/json:
- *             schema:
- *               type: array
- *               example: {
- *                "id": "ASD654A4SSA68D4A4S86D4A6SD",
- *                "email": "user@email.com",
- *                "password": "user_password"
- *               }
  *      '404':
  *        description: User not found
  */
