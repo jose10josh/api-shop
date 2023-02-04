@@ -50,7 +50,7 @@ router.get('/', async (req, res, next) => {
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the user to retrieve
  *    responses:
@@ -146,7 +146,7 @@ router.post('/',
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the user to update
  *    requestBody:
@@ -191,7 +191,7 @@ router.patch('/:id',
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the user to deletes
  *    responses:

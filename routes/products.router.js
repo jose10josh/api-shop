@@ -80,7 +80,7 @@ router.get('/',
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the product to retrieve
  *    responses:
@@ -95,6 +95,8 @@ router.get('/',
  *                "price": 1850,
  *                "image": "http://placeimg.com/640/480",
  *                }
+ *       '404':
+ *        description: Product not found
  */
 router.get('/:id',
   validatorHandler(getProductSchema, 'params'),
@@ -171,7 +173,7 @@ router.post('/',
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the product to update
  *    requestBody:
@@ -219,7 +221,7 @@ router.patch('/:id',
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *          type: "integer"
  *         required: true
  *         description: ID of the product to delete
  *    responses:
