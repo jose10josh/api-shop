@@ -19,7 +19,10 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      attributes: ['id', 'email'],
+      include: 'role'
+    });
     if(!user) {
       throw boom.notFound("User not found - id: " + id);
     }
@@ -33,14 +36,14 @@ class UserService {
 
   async update(id, data){
     const user = await this.findOne(id);
-    const resp = await user.update(data);
-    return resp;
+    await user.update(data);
+    return {message: "User updated"};
   }
 
   async delete(id){
     const user = await this.findOne(id);
     await user.destroy();
-    return "User deleted correctly";
+    return {message: "User deleted correctly"};
   }
 }
 

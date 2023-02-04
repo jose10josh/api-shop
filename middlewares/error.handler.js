@@ -16,7 +16,7 @@ function boomErrorHandler (err, req, res, next) {
 }
 
 function ormErrorHandler (err, req, res, next) {
-  console.error("ormErrorHandler: ", err);
+  console.error("ormErrorHandler: ", err.name);
   if(err instanceof ValidationError) {
     res.status(409).json({
       statusCode: 409,
@@ -25,7 +25,7 @@ function ormErrorHandler (err, req, res, next) {
     })
   };
 
-  if (err.name === 'SequelizeConnectionRefusedError' || err.name === 'SequelizeDatabaseError') {
+  if (err.name === 'SequelizeConnectionRefusedError' || err.name === 'SequelizeDatabaseError' || err.name === 'SequelizeForeignKeyConstraintError' || err.name === 'SyntaxError') {
     console.error('Database Error: ', err);
     res.status(500).json({
       statusCode: 500,

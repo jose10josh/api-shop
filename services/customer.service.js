@@ -8,16 +8,42 @@ class CustomerService {
 
 
   async find() {
-    const resp = await models.Customer.findAll({ include: ['user'] });
+    const resp = await models.Customer.findAll({
+      attributes: ['userId', 'name', 'lastName', 'phone'],
+      include: [
+        {
+          model: models.User,
+          as:'user',
+          attributes:['email'],
+          include: [{
+            model: models.Role,
+            as:'role',
+          }]
+        }
+      ]
+    });
     return resp;
   }
 
   async findOne(id) {
-    const user = await models.Customer.findByPk(id);
-    if (!user) {
-      throw boom.notFound('customer not found');
+    const customer = await models.Customer.findByPk(id, {
+      attributes: ['userId', 'name', 'lastName', 'phone'],
+      include: [
+        {
+          model: models.User,
+          as:'user',
+          attributes:['email'],
+          include: [{
+            model: models.Role,
+            as:'role',
+          }]
+        }
+      ]
+    });
+    if (!customer) {
+      throw boom.notFound('Customer not found - id: ' + id);
     }
-    return user;
+    return customer;
   }
 
   async create(data) {
@@ -27,16 +53,16 @@ class CustomerService {
     return newCustomer;
   }
 
-  async update(id, changes) {
+  async update(id, data) {
     const model = await this.findOne(id);
-    const resp = await model.update(changes);
-    return resp;
+    await model.update(data);
+    return { message: "Customer updated correctly" };
   }
 
   async delete(id) {
     const model = await this.findOne(id);
     await model.destroy();
-    return { resp: true };
+    return { message: "Customer deleted correctly" };
   }
 }
 

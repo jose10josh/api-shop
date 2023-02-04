@@ -8,13 +8,13 @@ const role = Joi.number().integer();
 const createUserSchema = Joi.object({
   email: email.required(),
   password: password.required(),
-  role_id: role.required()
+  roleId: role.required()
 });
 
 const updateUserSchema = Joi.object({
   email: email,
   password: password,
-  role_id: role
+  roleId: role
 });
 
 const getUserSchema = Joi.object({

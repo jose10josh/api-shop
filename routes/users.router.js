@@ -59,12 +59,14 @@ router.get('/', async (req, res, next) => {
  *        content:
  *           application/json:
  *             schema:
- *               type: array
+ *               type: object
  *               example: {
  *                  "id": 3,
  *                  "email": "test@correo.com",
  *                  "password": "123123123",
  *                }
+ *      '404':
+ *        description: User not found
  */
 router.get('/:id',
   validatorHandler(getUserSchema, 'params'),
@@ -94,7 +96,7 @@ router.get('/:id',
  *            example: {
  *                "email": "user@email.com",
  *                "password": "user_password",
- *                "role_id": 1
+ *                "roleId": 1
  *            }
  *    responses:
  *      '201':
@@ -154,11 +156,12 @@ router.post('/',
  *            type: object
  *            example: {
  *                "email": "user@email.com",
- *                "password": "user_password"
+ *                "password": "user_password",
+ *                "roleId": 1
  *            }
  *    responses:
  *      '200':
- *        description: Return the updated user object
+ *        description: Return a success message
  *        content:
  *           application/json:
  *             schema:
@@ -168,6 +171,8 @@ router.post('/',
  *                "email": "user@email.com",
  *                "password": "user_password"
  *               }
+ *      '404':
+ *        description: User not found
  */
 router.patch('/:id',
   validatorHandler(getUserSchema, 'params'),
@@ -200,7 +205,9 @@ router.patch('/:id',
  *         description: ID of the user to deletes
  *    responses:
  *      '200':
- *        description: Return status 200 if user deleted correctly
+ *        description: Return a success message
+ *      '404':
+ *        description: User not found
  */
 router.delete('/:id',
   validatorHandler(getUserSchema, 'params'),
@@ -208,7 +215,7 @@ router.delete('/:id',
     try {
       const { id } = req.params;
       const resp = await service.delete(id);
-      res.status(200).json({message: resp})
+      res.status(200).json(resp)
     } catch (error) {
       next(error);
     }

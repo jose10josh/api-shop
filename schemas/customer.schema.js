@@ -9,7 +9,7 @@ const userId = Joi.number().integer();
 
 
 const getCustomerSchema = Joi.object({
-  userId: userId.required()
+  id: userId.required()
 });
 
 const createCustomerSchema = Joi.object({
@@ -22,8 +22,7 @@ const createCustomerSchema = Joi.object({
 const updateCustomerSchema = Joi.object({
   name,
   lastName,
-  phone,
-  userId
+  phone
 });
 
 
