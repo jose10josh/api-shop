@@ -77,12 +77,26 @@ router.get('/',
  */
 router.get('/:id',
   passport.authenticate('jwt', {session: false}),
-  checkUserRole("admin", "customer"),
+  checkUserRole("admin"),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const resp = await service.findOne(id);
+      res.status(201).json(resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+router.get('/profile',
+  passport.authenticate('jwt', {session: false}),
+  checkUserRole("admin", "customer"),
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      const resp = await service.findOne(user.sub);
       res.status(201).json(resp);
     } catch (error) {
       next(error);
