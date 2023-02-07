@@ -3,7 +3,7 @@ const passport = require('passport');
 
 const UserService = require('../services/user.service.js');
 const validatorHandler = require('../middlewares/validator.handler.js');
-// const {CheckApiKey} = require('../middlewares/auth.handler.js');
+const {checkUserRole} = require('../middlewares/auth.handler.js');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema.js');
 
 
@@ -35,6 +35,7 @@ const service = new UserService();
  */
 router.get('/',
   passport.authenticate('jwt', {session: false}),
+  checkUserRole("admin"),
   async (req, res, next) => {
     try {
       const resp = await service.find();
@@ -76,6 +77,7 @@ router.get('/',
  */
 router.get('/:id',
   passport.authenticate('jwt', {session: false}),
+  checkUserRole("admin", "customer"),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
