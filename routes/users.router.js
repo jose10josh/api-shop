@@ -1,8 +1,11 @@
 const express = require('express');
+const passport = require('passport');
 
 const UserService = require('../services/user.service.js');
 const validatorHandler = require('../middlewares/validator.handler.js');
+// const {CheckApiKey} = require('../middlewares/auth.handler.js');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema.js');
+
 
 const router = express.Router();
 const service = new UserService();
@@ -30,14 +33,17 @@ const service = new UserService();
  *                }
  *               ]
  */
-router.get('/', async (req, res, next) => {
-  try {
-    const resp = await service.find();
-    res.json(resp);
-  } catch (error) {
-    next(error);
+router.get('/',
+  passport.authenticate('jwt', {session: false}),
+  async (req, res, next) => {
+    try {
+      const resp = await service.find();
+      res.json(resp);
+    } catch (error) {
+      next(error);
+    }
   }
-})
+)
 
 /**
  * @swagger
@@ -69,6 +75,7 @@ router.get('/', async (req, res, next) => {
  *        description: User not found
  */
 router.get('/:id',
+  passport.authenticate('jwt', {session: false}),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -166,6 +173,7 @@ router.post('/',
  *        description: User not found
  */
 router.patch('/:id',
+  passport.authenticate('jwt', {session: false}),
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
@@ -201,6 +209,7 @@ router.patch('/:id',
  *        description: User not found
  */
 router.delete('/:id',
+  passport.authenticate('jwt', {session: false}),
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {

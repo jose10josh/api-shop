@@ -3,6 +3,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const cors = require('cors');
 
+
 const routerApi = require('./routes/index.js');
 const {logErrors, errorHandler, boomErrorHandler, ormErrorHandler} = require('./middlewares/error.handler.js');
 
@@ -37,6 +38,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
+require('./utils/auth/index');
 
 routerApi(app);
 
