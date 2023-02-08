@@ -30,6 +30,10 @@ const UserSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
+  recoveryToken: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
